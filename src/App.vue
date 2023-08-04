@@ -1,47 +1,44 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <v-app>
+    <v-main>
+      <v-container class="mt-12">
+        <v-row justify="center">
+          <v-col cols="12" sm="8" md="6">
+            <h1 class="text-center">Todo List</h1>
+            <v-card class="pa-10">
+              <v-form>
+                <v-text-field variant="outlined"></v-text-field>
+                <v-list>
+                  <v-list-item
+                    class="mb-6"
+                    border
+                    height="60"
+                    lines="two"
+                    rounded
+                    v-for="todo in todos"
+                    :key="todo"
+                  >
+                    {{ todo }}
+                  </v-list-item>
+                </v-list>
+              </v-form>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    const todos = ref(['テスト1', 'テスト2', 'テスト3'])
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    return {
+      todos
+    }
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+})
+</script>
