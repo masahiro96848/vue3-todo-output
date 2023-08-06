@@ -28,33 +28,12 @@
         </v-row>
       </v-container>
     </v-main>
-
-    <!-- ダイアログ -->
-    <v-dialog v-model="showDeleteDialog">
-      <v-card>
-        <v-card-title class="headline">Todoを削除</v-card-title>
-        <v-card-text>
-          以下のTodoを削除しますか？
-          <v-list>
-            <v-list-item v-for="todo in selectedTodos" :key="todo.id">
-              {{ todo.title }}
-            </v-list-item>
-          </v-list>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn @click="showDeleteDialog = false">キャンセル</v-btn>
-          <v-btn color="primary" @click="confirmDeleteTodo">削除</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
-import AddTodo from './components/AddTodo.vue'
 import TodoList from './components/TodoList.vue'
-import ConfirmDeleteTodo from '@/components/modal/ConfirmDeleteTodo.vue'
 
 interface Todo {
   id: number
@@ -97,21 +76,22 @@ export default defineComponent({
       nextTodoId.value++ // 次のTodoのIDを更新
     }
 
-    const handleDelete = (id: number) => {
-      const selectedTodo = todoList.value.find((item) => item.id === id)
-      if (selectedTodo) {
-        selectedTodos.value = [selectedTodo]
-        showDeleteDialog.value = true
+    const handleDelete = (id: number, targetTitle: string) => {
+      if (window.confirm(`「${targetTitle}」のtodoを削除しますか？`)) {
+        todoList.value = todoList.value.filter((todo) => todo.id !== id)
       }
     }
 
-    const confirmDeleteTodo = async () => {
+    const cancel = () => {
+      showDeleteDialog.value = false
+    }
+
+    const confirmDeleteTodo = () => {
       const selectedIds = selectedTodos.value.map((todo) => todo.id)
       todoList.value = todoList.value.filter((todo) => !selectedIds.includes(todo.id))
       selectedTodos.value = [] // 選択された Todo をリセット
 
       showDeleteDialog.value = false
-      console.log(todoList)
     }
 
     return {
@@ -123,6 +103,7 @@ export default defineComponent({
       filteredTodoList,
       handleSubmit,
       handleDelete,
+      cancel,
       confirmDeleteTodo
     }
   }

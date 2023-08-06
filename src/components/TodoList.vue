@@ -14,7 +14,7 @@
       </v-list-item-title>
       <template v-slot:append>
         <v-list-item-action>
-          <v-icon @click="handleDelete(item.id)">mdi-delete</v-icon>
+          <v-icon @click="handleDelete(item.id, item.title)">mdi-delete</v-icon>
         </v-list-item-action>
       </template>
     </v-list-item>
@@ -31,19 +31,16 @@ interface Todo {
 
 export default defineComponent({
   props: {
-    id: {
-      type: Number
-    },
-
     filteredTodoList: {
       type: Array as PropType<Todo[]>,
       required: true
     }
   },
   setup(_, context) {
-    const handleDelete = (id: Number) => {
-      context.emit('handleDelete', id)
+    const handleDelete = (targetId: Number, targetTitle: String) => {
+      context.emit('handleDelete', targetId, targetTitle)
     }
+
     return {
       handleDelete
     }

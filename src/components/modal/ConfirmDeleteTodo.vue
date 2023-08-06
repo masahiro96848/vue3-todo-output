@@ -11,7 +11,7 @@
         </v-list>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="showDeleteDialog = false">キャンセル</v-btn>
+        <v-btn @click="cancel">キャンセル</v-btn>
         <v-btn color="primary" @click="confirmDeleteTodo">削除</v-btn>
       </v-card-actions>
     </v-card>
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { defineComponent, ref, toRef } from 'vue'
+import { defineComponent, ref, toRefs, watch } from 'vue'
 
 interface Todo {
   id: number
@@ -30,29 +30,42 @@ interface Todo {
 export default defineComponent({
   name: 'ConfirmDeleteTodo',
   props: {
-    showDeleteDialog: {
-      type: Boolean,
-      default: false
+    // showDeleteDialog: {
+    //   type: Boolean,
+    //   default: false
+    // },
+    modelValue: {
+      type: Boolean
+      // required: true
     },
     selectedTodos: {
       type: Array as PropType<Todo[]>
-    },
-    confirmDeleteTodo: {
-      type: () => {}
     }
   },
   setup(props, context) {
+    const { modelValue } = toRefs(props)
+
     const showDeleteDialog = ref(false)
     // 選択されたTodoを格納するためのリアクティブ変数
     const selectedTodos = ref<Todo[]>([])
 
+    // watch(modelValue, (newValue) => {
+    //   showDeleteDialog.value = newValue
+    // })
+
+    const cancel = () => {
+      context.emit('update:modelValue', false)
+    }
+
     const confirmDeleteTodo = () => {
+      context.emit('update:modelValue', false)
       context.emit('confirmDeleteTodo')
     }
     return {
-      // showDeleteDialog,
+      showDeleteDialog,
       // selectedTodos,
-      // confirmDeleteTodo
+      cancel,
+      confirmDeleteTodo
     }
   }
 })
