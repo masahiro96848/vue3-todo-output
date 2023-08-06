@@ -21,26 +21,6 @@
                 ></v-text-field>
 
                 <!-- TodoList一覧 -->
-                <!-- <v-list>
-                  <v-list-item
-                    class="mb-6"
-                    border
-                    height="60"
-                    lines="two"
-                    rounded
-                    v-for="item in filteredTodoList"
-                    :key="item.id"
-                  >
-                    <v-list-item-title>
-                      {{ item.title }}
-                    </v-list-item-title>
-                    <template v-slot:append>
-                      <v-list-item-action>
-                        <v-icon @click="handleDelete(item.id)">mdi-delete</v-icon>
-                      </v-list-item-action>
-                    </template>
-                  </v-list-item>
-                </v-list> -->
                 <TodoList :filtered-todo-list="filteredTodoList" @handleDelete="handleDelete" />
               </v-form>
             </v-card>
@@ -82,7 +62,7 @@ interface Todo {
 }
 
 export default defineComponent({
-  components: { AddTodo, TodoList },
+  components: { TodoList },
   setup() {
     const title = ref('')
     const searchKeyword = ref('')

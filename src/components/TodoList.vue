@@ -33,14 +33,11 @@ export default defineComponent({
   props: {
     id: {
       type: Number
-      // default: 0
     },
-    title: {
-      type: String,
-      default: ''
-    },
+
     filteredTodoList: {
-      type: Array as PropType<Todo[]>
+      type: Array as PropType<Todo[]>,
+      required: true
     }
   },
   setup(_, context) {
