@@ -21,7 +21,7 @@
                 ></v-text-field>
 
                 <!-- TodoList一覧 -->
-                <v-list>
+                <!-- <v-list>
                   <v-list-item
                     class="mb-6"
                     border
@@ -40,7 +40,8 @@
                       </v-list-item-action>
                     </template>
                   </v-list-item>
-                </v-list>
+                </v-list> -->
+                <TodoList :filtered-todo-list="filteredTodoList" @handleDelete="handleDelete" />
               </v-form>
             </v-card>
           </v-col>
@@ -71,6 +72,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
+import AddTodo from './components/AddTodo.vue'
+import TodoList from './components/TodoList.vue'
+import ConfirmDeleteTodo from '@/components/modal/ConfirmDeleteTodo.vue'
 
 interface Todo {
   id: number
@@ -78,6 +82,7 @@ interface Todo {
 }
 
 export default defineComponent({
+  components: { AddTodo, TodoList },
   setup() {
     const title = ref('')
     const searchKeyword = ref('')
