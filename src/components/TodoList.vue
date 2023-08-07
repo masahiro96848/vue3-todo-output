@@ -23,16 +23,12 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-
-interface Todo {
-  id: Number
-  title: string
-}
+import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({
   props: {
     filteredTodoList: {
-      type: Array as PropType<Todo[]>,
+      type: Array as PropType<TodoType[]>,
       required: true
     }
   },

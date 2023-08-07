@@ -27,12 +27,8 @@ import { defineComponent, ref, computed } from 'vue'
 import AddTodo from './components/AddTodo.vue'
 import SearchTodo from './components/SearchTodo.vue'
 import TodoList from './components/TodoList.vue'
-import { INIT_TODO_LIST } from '@/constants/todo'
-
-interface Todo {
-  id: number
-  title: string
-}
+import { INIT_TODO_LIST } from '@/constants/Todo'
+import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({
   components: { AddTodo, SearchTodo, TodoList },
@@ -41,9 +37,9 @@ export default defineComponent({
     const searchKeyword = ref('')
     const nextTodoId = ref(4)
     const showDeleteDialog = ref(false)
-    const selectedTodos = ref<Todo[]>([]) // 選択されたTodoを格納するためのリアクティブ変数
+    const selectedTodos = ref<TodoType[]>([]) // 選択されたTodoを格納するためのリアクティブ変数
 
-    const todoList = ref<Todo[]>(INIT_TODO_LIST)
+    const todoList = ref<TodoType[]>(INIT_TODO_LIST)
 
     const filteredTodoList = computed(() => {
       const keyword = searchKeyword.value.trim().toLowerCase()
@@ -56,7 +52,7 @@ export default defineComponent({
 
     const handleSubmit = () => {
       if (title.value === '') return
-      const newTodo: Todo = {
+      const newTodo: TodoType = {
         id: nextTodoId.value,
         title: title.value.trim() // 入力値をトリムしてから使用
       }
@@ -105,3 +101,4 @@ export default defineComponent({
   justify-content: flex-end;
 }
 </style>
+./constants/Todo
