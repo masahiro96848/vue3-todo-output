@@ -27,6 +27,7 @@ import { defineComponent, ref, computed } from 'vue'
 import AddTodo from './components/AddTodo.vue'
 import SearchTodo from './components/SearchTodo.vue'
 import TodoList from './components/TodoList.vue'
+import { INIT_TODO_LIST } from '@/constants/todo'
 
 interface Todo {
   id: number
@@ -40,14 +41,9 @@ export default defineComponent({
     const searchKeyword = ref('')
     const nextTodoId = ref(4)
     const showDeleteDialog = ref(false)
-    // 選択されたTodoを格納するためのリアクティブ変数
-    const selectedTodos = ref<Todo[]>([])
+    const selectedTodos = ref<Todo[]>([]) // 選択されたTodoを格納するためのリアクティブ変数
 
-    let todoList = ref<Todo[]>([
-      { id: 1, title: 'Todo1' },
-      { id: 2, title: 'Todo2' },
-      { id: 3, title: 'Todo3' }
-    ])
+    const todoList = ref<Todo[]>(INIT_TODO_LIST)
 
     const filteredTodoList = computed(() => {
       const keyword = searchKeyword.value.trim().toLowerCase()
