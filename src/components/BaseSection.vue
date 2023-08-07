@@ -27,7 +27,7 @@ import { defineComponent, ref, computed, inject } from 'vue'
 import AddTodo from '@/components/AddTodo.vue'
 import SearchTodo from '@/components/SearchTodo.vue'
 import TodoList from '@/components/TodoList.vue'
-import { INIT_TODO_LIST } from '@/constants/Todo'
+import { INIT_TODO_LIST } from '@/constants/todo'
 import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({

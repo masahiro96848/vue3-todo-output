@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch, reactive, computed, provide, toRefs } from 'vue'
 import BaseSection from '@/components/BaseSection.vue'
-import { INIT_TODO_LIST } from '@/constants/Todo'
+import { INIT_TODO_LIST } from '@/constants/todo'
 import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({
