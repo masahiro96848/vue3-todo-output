@@ -10,12 +10,7 @@
                 <!-- Todo新規追加 -->
                 <AddTodo v-model:title="title" @handleSubmit="handleSubmit" />
                 <!-- Todoキーワード検索 -->
-                <v-text-field
-                  v-model="searchKeyword"
-                  label="キーワード検索"
-                  variant="outlined"
-                ></v-text-field>
-
+                <SearchTodo v-model:searchKeyword="searchKeyword" />
                 <!-- TodoList一覧 -->
                 <TodoList :filtered-todo-list="filteredTodoList" @handleDelete="handleDelete" />
               </v-form>
@@ -30,6 +25,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import AddTodo from './components/AddTodo.vue'
+import SearchTodo from './components/SearchTodo.vue'
 import TodoList from './components/TodoList.vue'
 
 interface Todo {
@@ -38,7 +34,7 @@ interface Todo {
 }
 
 export default defineComponent({
-  components: { AddTodo, TodoList },
+  components: { AddTodo, SearchTodo, TodoList },
   setup() {
     const title = ref('')
     const searchKeyword = ref('')
@@ -48,9 +44,9 @@ export default defineComponent({
     const selectedTodos = ref<Todo[]>([])
 
     let todoList = ref<Todo[]>([
-      { id: 1, title: 'テスト1' },
-      { id: 2, title: 'テスト2' },
-      { id: 3, title: 'テスト3' }
+      { id: 1, title: 'Todo1' },
+      { id: 2, title: 'Todo2' },
+      { id: 3, title: 'Todo3' }
     ])
 
     const filteredTodoList = computed(() => {
