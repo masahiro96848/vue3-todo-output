@@ -7,13 +7,9 @@
             <h1 class="text-center">Todo List</h1>
             <v-card class="pa-10">
               <v-form>
-                <v-text-field
-                  v-model="title"
-                  label="Todoを追加"
-                  class="mb-4"
-                  variant="outlined"
-                  @keyup.enter="handleSubmit"
-                ></v-text-field>
+                <!-- Todo新規追加 -->
+                <AddTodo v-model:title="title" @handleSubmit="handleSubmit" />
+                <!-- Todoキーワード検索 -->
                 <v-text-field
                   v-model="searchKeyword"
                   label="キーワード検索"
@@ -33,6 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
+import AddTodo from './components/AddTodo.vue'
 import TodoList from './components/TodoList.vue'
 
 interface Todo {
@@ -41,7 +38,7 @@ interface Todo {
 }
 
 export default defineComponent({
-  components: { TodoList },
+  components: { AddTodo, TodoList },
   setup() {
     const title = ref('')
     const searchKeyword = ref('')
@@ -73,6 +70,7 @@ export default defineComponent({
       }
       todoList.value.push(newTodo) // 新しいTodoをtodosに追加
       title.value = '' // 入力フィールドをクリア
+
       nextTodoId.value++ // 次のTodoのIDを更新
     }
 
