@@ -22,22 +22,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, inject } from 'vue'
 import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({
-  props: {
-    filteredTodoList: {
-      type: Array as PropType<TodoType[]>,
-      required: true
-    }
-  },
   setup(_, context) {
+    const filteredTodoList = inject('filteredTodoList') as TodoType[]
     const handleDelete = (targetId: Number, targetTitle: String) => {
       context.emit('handleDelete', targetId, targetTitle)
     }
 
     return {
+      filteredTodoList,
       handleDelete
     }
   }
