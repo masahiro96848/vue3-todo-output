@@ -12,7 +12,7 @@
                 <!-- Todoキーワード検索 -->
                 <SearchTodo v-model:searchKeyword="searchKeyword" />
                 <!-- TodoList一覧 -->
-                <TodoList :filtered-todo-list="filteredTodoList" @handleDelete="handleDelete" />
+                <TodoList @handleDelete="handleDelete" />
               </v-form>
             </v-card>
           </v-col>
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, inject } from 'vue'
+import { defineComponent, ref, computed, inject, type ComputedRef, provide } from 'vue'
 import AddTodo from '@/components/AddTodo.vue'
 import SearchTodo from '@/components/SearchTodo.vue'
 import TodoList from '@/components/TodoList.vue'
@@ -40,8 +40,16 @@ export default defineComponent({
     const selectedTodos = ref<TodoType[]>([]) // 選択されたTodoを格納するためのリアクティブ変数
     const todoList = ref<TodoType[]>(INIT_TODO_LIST)
 
-    // filteredTodoListをInject
-    const filteredTodoList = inject('filteredTodoList') as TodoType[]
+    const filteredTodoList = computed(() => {
+      const keyword = searchKeyword.value.trim().toLowerCase()
+      if (!keyword) {
+        return todoList.value
+      } else {
+        return todoList.value.filter((item) => item.title.toLowerCase().startsWith(keyword))
+      }
+    })
+    // filteredTodoListをProvide
+    provide('filteredTodoList', filteredTodoList)
 
     const handleSubmit = () => {
       if (title.value === '') return

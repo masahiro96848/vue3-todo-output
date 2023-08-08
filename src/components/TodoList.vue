@@ -27,6 +27,7 @@ import type { TodoType } from '@/interfaces/Todo'
 
 export default defineComponent({
   setup(_, context) {
+    // InjectでfilteredTodoListを取得
     const filteredTodoList = inject('filteredTodoList') as TodoType[]
     const handleDelete = (targetId: Number, targetTitle: String) => {
       context.emit('handleDelete', targetId, targetTitle)
